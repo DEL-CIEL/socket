@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "socketUDP", "socketUDP\socketUDP.csproj", "{1C038956-E25C-49F3-A7C0-A7A53634FC7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C038956-E25C-49F3-A7C0-A7A53634FC7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C038956-E25C-49F3-A7C0-A7A53634FC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C038956-E25C-49F3-A7C0-A7A53634FC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C038956-E25C-49F3-A7C0-A7A53634FC7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CE8AECC-8BAE-4BF8-A27C-23D185E368EE}
+	EndGlobalSection
+EndGlobal
