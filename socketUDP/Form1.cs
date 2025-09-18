@@ -14,6 +14,8 @@ namespace socketUDP
 {
     public partial class Form1 : Form
     {
+        private Socket SSockUDP;
+
         public Form1()
         {
             this.Text = "Communication par socket UDP";
@@ -27,11 +29,11 @@ namespace socketUDP
 
         private void InitializeComponent()
         {
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
+            this.buttonCreerSocket = new System.Windows.Forms.Button();
+            this.buttonFermer = new System.Windows.Forms.Button();
+            this.buttonEnvoyer = new System.Windows.Forms.Button();
+            this.buttonRecevoir = new System.Windows.Forms.Button();
+            this.buttonCLS = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -46,55 +48,55 @@ namespace socketUDP
             this.richTextBox3 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // button6
+            // buttonCreerSocket
             // 
-            this.button6.Location = new System.Drawing.Point(343, 42);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(147, 22);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "Créer Socket et Bind(IPeR)";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.buttonCreerSocket.Location = new System.Drawing.Point(343, 42);
+            this.buttonCreerSocket.Name = "buttonCreerSocket";
+            this.buttonCreerSocket.Size = new System.Drawing.Size(147, 22);
+            this.buttonCreerSocket.TabIndex = 0;
+            this.buttonCreerSocket.Text = "Créer Socket et Bind(IPeR)";
+            this.buttonCreerSocket.UseVisualStyleBackColor = true;
+            this.buttonCreerSocket.Click += new System.EventHandler(this.buttonCreerSocket_Click);
             // 
-            // button7
+            // buttonFermer
             // 
-            this.button7.Location = new System.Drawing.Point(343, 85);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(147, 22);
-            this.button7.TabIndex = 1;
-            this.button7.Text = "Fermer Close()";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.buttonFermer.Location = new System.Drawing.Point(343, 85);
+            this.buttonFermer.Name = "buttonFermer";
+            this.buttonFermer.Size = new System.Drawing.Size(147, 22);
+            this.buttonFermer.TabIndex = 1;
+            this.buttonFermer.Text = "Fermer Close()";
+            this.buttonFermer.UseVisualStyleBackColor = true;
+            this.buttonFermer.Click += new System.EventHandler(this.buttonFermer_Click);
             // 
-            // button8
+            // buttonEnvoyer
             // 
-            this.button8.Location = new System.Drawing.Point(343, 147);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(147, 22);
-            this.button8.TabIndex = 2;
-            this.button8.Text = "Envoyer SendTo(IPeD)";
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.buttonEnvoyer.Location = new System.Drawing.Point(343, 147);
+            this.buttonEnvoyer.Name = "buttonEnvoyer";
+            this.buttonEnvoyer.Size = new System.Drawing.Size(147, 22);
+            this.buttonEnvoyer.TabIndex = 2;
+            this.buttonEnvoyer.Text = "Envoyer SendTo(IPeD)";
+            this.buttonEnvoyer.UseVisualStyleBackColor = true;
+            this.buttonEnvoyer.Click += new System.EventHandler(this.buttonEnvoyer_Click);
             // 
-            // button9
+            // buttonRecevoir
             // 
-            this.button9.Location = new System.Drawing.Point(343, 188);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(147, 40);
-            this.button9.TabIndex = 3;
-            this.button9.Text = "Recevoir ReceiveFrom()\r\nBloquant Timeout";
-            this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.buttonRecevoir.Location = new System.Drawing.Point(343, 188);
+            this.buttonRecevoir.Name = "buttonRecevoir";
+            this.buttonRecevoir.Size = new System.Drawing.Size(147, 40);
+            this.buttonRecevoir.TabIndex = 3;
+            this.buttonRecevoir.Text = "Recevoir ReceiveFrom()\r\nBloquant Timeout";
+            this.buttonRecevoir.UseVisualStyleBackColor = true;
+            this.buttonRecevoir.Click += new System.EventHandler(this.buttonRecevoir_Click);
             // 
-            // button10
+            // buttonCLS
             // 
-            this.button10.Location = new System.Drawing.Point(343, 322);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(65, 22);
-            this.button10.TabIndex = 4;
-            this.button10.Text = "CLS";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
+            this.buttonCLS.Location = new System.Drawing.Point(343, 322);
+            this.buttonCLS.Name = "buttonCLS";
+            this.buttonCLS.Size = new System.Drawing.Size(65, 22);
+            this.buttonCLS.TabIndex = 4;
+            this.buttonCLS.Text = "CLS";
+            this.buttonCLS.UseVisualStyleBackColor = true;
+            this.buttonCLS.Click += new System.EventHandler(this.buttonCLS_Click);
             // 
             // label7
             // 
@@ -180,9 +182,9 @@ namespace socketUDP
             // 
             // richTextBox2
             // 
-            this.richTextBox2.Location = new System.Drawing.Point(80, 215);
+            this.richTextBox2.Location = new System.Drawing.Point(82, 215);
             this.richTextBox2.Name = "richTextBox2";
-            this.richTextBox2.Size = new System.Drawing.Size(203, 129);
+            this.richTextBox2.Size = new System.Drawing.Size(255, 129);
             this.richTextBox2.TabIndex = 15;
             this.richTextBox2.Text = "";
             // 
@@ -190,7 +192,7 @@ namespace socketUDP
             // 
             this.richTextBox3.Location = new System.Drawing.Point(80, 147);
             this.richTextBox3.Name = "richTextBox3";
-            this.richTextBox3.Size = new System.Drawing.Size(205, 62);
+            this.richTextBox3.Size = new System.Drawing.Size(257, 62);
             this.richTextBox3.TabIndex = 16;
             this.richTextBox3.Text = "";
             // 
@@ -209,15 +211,16 @@ namespace socketUDP
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.button10);
-            this.Controls.Add(this.button9);
-            this.Controls.Add(this.button8);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.buttonCLS);
+            this.Controls.Add(this.buttonRecevoir);
+            this.Controls.Add(this.buttonEnvoyer);
+            this.Controls.Add(this.buttonFermer);
+            this.Controls.Add(this.buttonCreerSocket);
             this.Name = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private void Form1_Load_1(object sender, EventArgs e)
@@ -234,7 +237,7 @@ namespace socketUDP
             socket.Bind(IPedR);
 
             var msg = Encoding.ASCII.GetBytes("Bonjour UDP");
-            socket.SendTo(msg, IPedFrom);
+            socket.SendTo(msg, IPedD);
 
             var buffer = new byte[1024];
             socket.ReceiveFrom(buffer, ref IPedFrom);
@@ -243,29 +246,39 @@ namespace socketUDP
             this.richTextBox3.Text += Encoding.ASCII.GetString(buffer, 0, buffer.Length);
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void buttonCreerSocket_Click(object sender, EventArgs e)
         {
+            this.SSockUDP = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            IPAddress ip = IPAddress.Parse(this.textBox6.Text);
+            int port = int.Parse(this.textBox7.Text);
+            IPEndPoint iped = new IPEndPoint(ip, port);
+
+            this.SSockUDP.Connect(iped);
+
+            this.richTextBox2.Text += "Connexion créée vers " + ip + ':' + port + '\n';
+        }
+
+        private void buttonFermer_Click(object sender, EventArgs e)
+        {
+            this.SSockUDP.Shutdown(SocketShutdown.Both);
+            this.SSockUDP.Close();
 
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void buttonEnvoyer_Click(object sender, EventArgs e)
         {
-
+            this.SSockUDP.Send(Encoding.ASCII.GetBytes(this.richTextBox3.Text));
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private void buttonRecevoir_Click(object sender, EventArgs e)
         {
-
+            byte[] buffer = new byte[1024];
+            this.SSockUDP.Receive(buffer);
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void buttonCLS_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-
+            this.richTextBox2.Text = "";
         }
     }
 }
