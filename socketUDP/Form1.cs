@@ -247,7 +247,7 @@ namespace socketUDP
                 MessageBox.Show("erreur creer: " + ex.Message);
             }
         }
-        
+
         private void buttonFermer_Click(object sender, EventArgs e)
         {
             if (this.SSockUDP != null)
@@ -273,6 +273,7 @@ namespace socketUDP
                 byte[] msg = Encoding.ASCII.GetBytes(messageEnvoyer);
 
                 this.SSockUDP.SendTo(msg, ipEndPointDest);
+                SSockUDP.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, 5000);
             }
             catch (Exception ex)
             {
