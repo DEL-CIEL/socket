@@ -223,57 +223,78 @@ namespace socketUDP
 
         }
 
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPHostEntry ipHostEntry = Dns.GetHostEntry(Dns.GetHostName());
-            IPAddress iPAddress = ipHostEntry.AddressList[6];
-
-            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-
-            IPEndPoint IPedD = new IPEndPoint(iPAddress, 50000);
-            IPEndPoint IPedR = new IPEndPoint(iPAddress, 50000);
-            EndPoint IPedFrom = new IPEndPoint(iPAddress, 50000);
-            socket.Bind(IPedR);
-
-            var msg = Encoding.ASCII.GetBytes("Bonjour UDP");
-            socket.SendTo(msg, IPedD);
-
-            var buffer = new byte[1024];
-            socket.ReceiveFrom(buffer, ref IPedFrom);
-            socket.Close();
-
-            this.richTextBox3.Text += Encoding.ASCII.GetString(buffer, 0, buffer.Length);
-        }
+        private void Form1_Load_1(object sender, EventArgs e) { }
 
         private void buttonCreerSocket_Click(object sender, EventArgs e)
         {
-            this.SSockUDP = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            IPAddress ip = IPAddress.Parse(this.textBox6.Text);
-            int port = int.Parse(this.textBox7.Text);
-            IPEndPoint iped = new IPEndPoint(ip, port);
+            try
+            {
+                this.buttonCreerSocket.Enabled = false;
+                this.buttonFermer.Enabled = true;
+                this.buttonEnvoyer.Enabled = true;
+                this.buttonRecevoir.Enabled = true;
+                this.SSockUDP = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+                IPAddress ip = IPAddress.Parse(this.textBox6.Text);
+                int port = int.Parse(this.textBox7.Text);
+                IPEndPoint iped = new IPEndPoint(ip, port);
 
-            this.SSockUDP.Connect(iped);
+                this.SSockUDP.Bind(iped);
 
-            this.richTextBox2.Text += "Connexion créée vers " + ip + ':' + port + '\n';
+                this.richTextBox2.Text += "Socket créée" + '\n';
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("erreur creer + " + ex.Message);
+            }
         }
 
         private void buttonFermer_Click(object sender, EventArgs e)
         {
-            this.SSockUDP.Shutdown(SocketShutdown.Both);
-            this.SSockUDP.Close();
-
+            if (this.SSockUDP != null)
+            {
+                this.SSockUDP.Shutdown(SocketShutdown.Both);
+                this.SSockUDP.Close();
+                this.buttonCreerSocket.Enabled = true;
+                this.buttonFermer.Enabled = false;
+                this.buttonEnvoyer.Enabled = false;
+                this.buttonRecevoir.Enabled = false;
+            }
         }
 
         private void buttonEnvoyer_Click(object sender, EventArgs e)
         {
-            this.SSockUDP.Send(Encoding.ASCII.GetBytes(this.richTextBox3.Text));
-        }
+            try
+            {
+                string messageEnvoyer = this.richTextBox3.Text;
+                IPAddress ipDest = IPAddress.Parse(this.textBox8.Text);
+                int portDest = int.Parse(this.textBox9.Text);
+                IPEndPoint ipEndPointDest = new IPEndPoint(ipDest, portDest);
 
+                byte[] msg = Encoding.ASCII.GetBytes(messageEnvoyer);
+
+                this.SSockUDP.SendTo(msg, ipEndPointDest);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("erreur envoyer");
+            }
+        }
         private void buttonRecevoir_Click(object sender, EventArgs e)
         {
-            byte[] buffer = new byte[1024];
-            this.SSockUDP.Receive(buffer);
+            try
+            {
+                byte[] buffer = new byte[1024];
+                EndPoint endPoint = new IPEndPoint(IPAddress.Parse(this.textBox8.Text), int.Parse(this.textBox9.Text));
+
+                int bytesReceived = this.SSockUDP.ReceiveFrom(buffer, ref endPoint);
+                string receivedMessage = Encoding.ASCII.GetString(buffer, 0, bytesReceived);
+
+                this.richTextBox2.Text += "Message reçu de " + endPoint.ToString() + " : " + receivedMessage + "\n";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la réception : " + ex.Message);
+            }
         }
 
         private void buttonCLS_Click(object sender, EventArgs e)
