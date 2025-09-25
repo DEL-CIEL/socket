@@ -244,10 +244,10 @@ namespace socketUDP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("erreur creer + " + ex.Message);
+                MessageBox.Show("erreur creer: " + ex.Message);
             }
         }
-
+        
         private void buttonFermer_Click(object sender, EventArgs e)
         {
             if (this.SSockUDP != null)
@@ -276,7 +276,7 @@ namespace socketUDP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("erreur envoyer");
+                MessageBox.Show("erreur envoyer: " + ex.Message);
             }
         }
         private void buttonRecevoir_Click(object sender, EventArgs e)
